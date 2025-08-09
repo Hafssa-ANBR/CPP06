@@ -6,7 +6,7 @@
 /*   By: hanebaro <hanebaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 09:51:30 by hanebaro          #+#    #+#             */
-/*   Updated: 2025/08/09 14:14:51 by hanebaro         ###   ########.fr       */
+/*   Updated: 2025/08/09 19:49:37 by hanebaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,27 @@ void int_cast(double val)
 void float_cast(double val)
 {
     std::cout << "float cast :" << std::endl;
-    
+    if (val > std::numeric_limits<double>::max() || val < -std::numeric_limits<double>::max()) 
+    {
+        std::cout << "impossible" << std::endl;
+        return;
+    }
+    if(val == static_cast<int>(val))
+        std::cout << static_cast<float>(val) << ".0f" << std::endl;
+    else
+        std::cout << static_cast<float>(val) << "f" << std::endl;
 }
 void double_cast(double val)
 {
     std::cout << "double cast :" << std::endl;
-    
+    if(val == static_cast<int>(val))
+        std::cout << val << ".0" << std::endl;
+    else
+        std::cout << val << std::endl;
 }
     
 void ScalarConverter::convert(std::string literal)
 {
-    int i = 0;
     double val;
     char *endptr = NULL;
     if (pseudoliterals(literal))
@@ -93,7 +103,6 @@ void ScalarConverter::convert(std::string literal)
         char_cast(val);
         int_cast(val);
         float_cast(val);
-        double_cast(val);
-        
+        double_cast(val); 
     }
 }

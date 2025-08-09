@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanebaro <hanebaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 09:51:25 by hanebaro          #+#    #+#             */
-/*   Updated: 2025/08/09 19:40:26 by hanebaro         ###   ########.fr       */
+/*   Created: 2025/08/09 19:15:00 by hanebaro          #+#    #+#             */
+/*   Updated: 2025/08/09 19:51:47 by hanebaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
-#include <iostream>
+#include "ScalarConverter.hpp"
 
-class ScalarConverter
+int main(int argc, char **argv)
 {
-    private:
-        ScalarConverter();
-        ScalarConverter(const ScalarConverter &cpy);
-        ScalarConverter &operator=(const ScalarConverter &affect);
-        ~ScalarConverter();
-    public:
-        static void convert(std::string literal);
-};
+	if (argc != 2)
+	{
+		std::cout << "must one argument" << std::endl;
+		return (1);
+	}
+	ScalarConverter::convert(argv[1]);
+	return (0);
+}
