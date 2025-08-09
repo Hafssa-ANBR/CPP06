@@ -6,7 +6,7 @@
 /*   By: hanebaro <hanebaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 09:51:30 by hanebaro          #+#    #+#             */
-/*   Updated: 2025/08/09 19:49:37 by hanebaro         ###   ########.fr       */
+/*   Updated: 2025/08/09 21:13:50 by hanebaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int pseudoliterals(std::string literal)
 
 void char_cast(double val)
 {
-    std::cout << "char cast :" << std::endl;
-    if (val < 0 || val > 127)
-        std::cout << "impossible :: invalid character" << std::endl;
+    std::cout << "char : ";
+    if (std::to_string(val) == "nan" || val < 0 || val > 127)
+        std::cout << "impossible" << std::endl;
     else if(!isprint(static_cast<char>(val)))
         std::cout << "Non displayable" << std::endl;
     else
@@ -47,15 +47,15 @@ void char_cast(double val)
 }
 void int_cast(double val)
 {
-    std::cout << "int cast :" << std::endl;
-    if(val > static_cast<double>(INT_MAX) || val < static_cast<double>(INT_MIN))//why cast INT_MAX
-        std::cout << "value out of int range" << std::endl;
+    std::cout << "int : ";
+    if(std::to_string(val) == "nan" || val > static_cast<double>(INT_MAX) || val < static_cast<double>(INT_MIN))//why cast INT_MAX
+        std::cout << "impossible" << std::endl;
     else
         std::cout << static_cast<int>(val) << std::endl;
 }
 void float_cast(double val)
 {
-    std::cout << "float cast :" << std::endl;
+    std::cout << "float : ";
     if (val > std::numeric_limits<double>::max() || val < -std::numeric_limits<double>::max()) 
     {
         std::cout << "impossible" << std::endl;
@@ -68,7 +68,7 @@ void float_cast(double val)
 }
 void double_cast(double val)
 {
-    std::cout << "double cast :" << std::endl;
+    std::cout << "cast : ";
     if(val == static_cast<int>(val))
         std::cout << val << ".0" << std::endl;
     else
@@ -81,8 +81,12 @@ void ScalarConverter::convert(std::string literal)
     char *endptr = NULL;
     if (pseudoliterals(literal))
     {
-        std::cout << literal << std::endl;
-        return;
+        if (literal == "-inff" || literal == "-inf")
+            val = -std::numeric_limits<double>::infinity();
+        else if (literal == "+inff" || literal == "+inf")
+            val = std::numeric_limits<double>::infinity();
+        else
+            val = std::numeric_limits<double>::quiet_NaN();
     }
     else if (literal.length() == 1 && !isdigit(literal[0]))
         val = static_cast<double>(literal[0]);
@@ -100,9 +104,9 @@ void ScalarConverter::convert(std::string literal)
             std::cout << "value out of range" << std::endl;
             return;
         }
-        char_cast(val);
-        int_cast(val);
-        float_cast(val);
-        double_cast(val); 
     }
+    char_cast(val);
+    int_cast(val);
+    float_cast(val);
+    double_cast(val); 
 }
