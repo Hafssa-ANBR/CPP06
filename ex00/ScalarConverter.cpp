@@ -6,7 +6,7 @@
 /*   By: hanebaro <hanebaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 09:51:30 by hanebaro          #+#    #+#             */
-/*   Updated: 2025/08/09 13:41:32 by hanebaro         ###   ########.fr       */
+/*   Updated: 2025/08/09 14:14:51 by hanebaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,35 @@ int pseudoliterals(std::string literal)
     return (0);
 }
 
+void char_cast(double val)
+{
+    std::cout << "char cast :" << std::endl;
+    if (val < 0 || val > 127)
+        std::cout << "impossible :: invalid character" << std::endl;
+    else if(!isprint(static_cast<char>(val)))
+        std::cout << "Non displayable" << std::endl;
+    else
+        std::cout << "'" << static_cast<char>(val) << "'" << std::endl;
+}
+void int_cast(double val)
+{
+    std::cout << "int cast :" << std::endl;
+    if(val > static_cast<double>(INT_MAX) || val < static_cast<double>(INT_MIN))//why cast INT_MAX
+        std::cout << "value out of int range" << std::endl;
+    else
+        std::cout << static_cast<int>(val) << std::endl;
+}
+void float_cast(double val)
+{
+    std::cout << "float cast :" << std::endl;
+    
+}
+void double_cast(double val)
+{
+    std::cout << "double cast :" << std::endl;
+    
+}
+    
 void ScalarConverter::convert(std::string literal)
 {
     int i = 0;
@@ -61,6 +90,10 @@ void ScalarConverter::convert(std::string literal)
             std::cout << "value out of range" << std::endl;
             return;
         }
+        char_cast(val);
+        int_cast(val);
+        float_cast(val);
+        double_cast(val);
         
     }
 }
