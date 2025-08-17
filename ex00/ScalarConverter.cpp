@@ -6,7 +6,7 @@
 /*   By: hanebaro <hanebaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 09:51:30 by hanebaro          #+#    #+#             */
-/*   Updated: 2025/08/09 21:13:50 by hanebaro         ###   ########.fr       */
+/*   Updated: 2025/08/17 12:39:54 by hanebaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void int_cast(double val)
 void float_cast(double val)
 {
     std::cout << "float : ";
-    if (val > std::numeric_limits<double>::max() || val < -std::numeric_limits<double>::max()) 
+    if ((val > std::numeric_limits<double>::max() || val < -std::numeric_limits<double>::max())
+         && (val != -std::numeric_limits<double>::infinity() && val != std::numeric_limits<double>::infinity())) 
     {
         std::cout << "impossible" << std::endl;
         return;
@@ -68,7 +69,7 @@ void float_cast(double val)
 }
 void double_cast(double val)
 {
-    std::cout << "cast : ";
+    std::cout << "double : ";
     if(val == static_cast<int>(val))
         std::cout << val << ".0" << std::endl;
     else
@@ -77,7 +78,7 @@ void double_cast(double val)
     
 void ScalarConverter::convert(std::string literal)
 {
-    double val;
+    double val = 1;
     char *endptr = NULL;
     if (pseudoliterals(literal))
     {
@@ -92,13 +93,18 @@ void ScalarConverter::convert(std::string literal)
         val = static_cast<double>(literal[0]);
     else
     {
+        if (literal == "-nan" || literal == "-nanf")
+        {
+            std::cout << "Invalid literal" << std::endl;
+            return;
+        }
         val = std::strtod(literal.c_str(), &endptr);
         if (*endptr != '\0' && (*endptr != 'f' || *(endptr + 1) != '\0'))
         {
             std::cout << "Invalid literal" << std::endl;
             return;
         }
-        if (val > std::numeric_limits<double>::max() ||
+        else if (val > std::numeric_limits<double>::max() ||
             val < std::numeric_limits<double>::lowest())
         {
             std::cout << "value out of range" << std::endl;

@@ -1,7 +1,8 @@
 #include <iostream>
 #include "Base.hpp"
 
-int main() {
+int main() 
+{
     Base* obj = generate();
 
     std::cout << "Identify by pointer: ";
@@ -11,5 +12,5 @@ int main() {
     identify(*obj);
 
     delete obj;
-    return 0;
+    return (0);
 }
